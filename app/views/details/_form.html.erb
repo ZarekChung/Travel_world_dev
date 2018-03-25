@@ -1,0 +1,130 @@
+<% if @detail.errors.any? %>
+<h2>We have some erroes here !</h2>
+<ul>
+  <% @detail.errors.full_messages.each do |msg| %>
+  <li><%= msg %></li>
+  <% end %>
+</ul>
+
+<% end %>
+
+<div class="container">
+  <div class="form-group">
+    <%= form_for @detail do |f| %>
+    <form>
+<table>
+  <tr class="form-group">
+    <td>
+      category
+    </td>
+    <td>
+      <%= f.collection_select :category_id, Category.all, :id,:name,{prompt:true},{class: "form-control"} %>
+    </td>
+  </tr>
+
+   <tr class="form-group">
+    <td>
+      <%= f.label  'days'%>
+    </td>
+    <td>
+      <%= f.label  @schedules.day %>
+      <% f.label :schedule_id , @schedules.id %>
+      <%= f.hidden_field :spot_id, :value => @spot.id %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      spot_name
+    </td>
+    <td>
+       <%= @spot.spot_name%>      
+    </td>
+  </tr>
+
+   <tr>
+    <td>
+      Photo
+    </td>
+    <td>
+        <%= image_tag @spot.image,width:'300px' if @spot.image?%> 
+    </td>
+  </tr>
+
+<tr>
+    <td>
+      start_t
+    </td>
+    <td>
+       <%= time_select f, :start_t, :default => {:hour => '8', :minute => '00'} %>
+    </td>
+  </tr>
+
+   <tr>
+    <td>
+      Hours
+    </td>
+    <td>
+      <%= f.select :hr, options_for_select(1..24), { prompt: "hours" } %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <%= f.label :traffic, "traffic tool"%>
+    </td>
+    <td>
+      <%= f.text_field :traffic %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <%= f.label :content, "content"%> 
+    </td>
+    <td>
+      <%= f.text_area :content, placeholder: "140 character...", maxlength: 140,rows: 5, class:"form-control",id:"message" %>
+    </td>
+  </tr>
+  
+
+ 
+</table>
+
+   <%= f.submit "新增"  ,class:"btn btn-primary btn-right" %> 
+ </form>
+<% end %>
+      </div>
+
+
+
+   
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+
+  
