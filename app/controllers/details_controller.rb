@@ -16,12 +16,14 @@ class DetailsController < ApplicationController
     #@event = Event.find(3)
     #@schedules = @event.schedules.last
     #render :new
+    #回傳的view不要含有layout
+    render :layout => false
   end
 
  def create
     #1.找出該筆spot_id - 用place去找
-    @event = Event.find(3)
-    @schedules = @event.schedules.last
+
+    @schedules = Schedule.find(params[:detail][:schedule_id])
 
     #要有如果找不到的防呆
     @spot = Spot.find(params[:detail][:spot_id])

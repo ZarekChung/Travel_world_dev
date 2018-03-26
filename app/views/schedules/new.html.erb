@@ -1,14 +1,14 @@
 
-
+  <!--
  <a href="#divForm" id="btnForm" data-turbolinks="false">Load Form</a>
  <div id="divForm" style="display:none">
-     <!--<form action="tbd">
+   <form action="tbd">
          File: <input type="file" /><br /><br />
          <input type="submit" />
-     </form>-->
+     </form>
  </div>
 
-
+-->
 
 <div class="container">
   <div class="row">
@@ -24,7 +24,7 @@
   </div>
 
 <div class="row">
-  <div class="col-12 col-md-8">
+  <div class="col-12 col-md-8 col-xs-12">
      <p>待選清單</p>
 
     <div class="map-bolck">
@@ -39,7 +39,7 @@
     </div>
 
   </div>
-  <div class="col-6 col-md-4">
+  <div class="col-6 col-md-4 col-xs-12">
       <div class="spot-info">
    <h3>行程資訊</h3>
 
@@ -72,10 +72,10 @@
         <div class="bhoechie-tab-content sortable" id="<%= schedule.id %>">
                  <% schedule.details.all.each do |detail| %>
                     <center>
-                      <h1 class="glyphicon glyphicon-plane" style="font-size:14em;color:#55518a"></h1>
-                      <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                      <h3 style="margin-top: 0;color:#55518a">Flight Reservation</h3>
-<h4>景點名稱<%=detail.spot_id%></h4>
+                     <div class="conteaner">
+
+                       <%=detail.spot.spot_name%>
+                     </div>
                     </center>
 
                 <% end %>
@@ -92,35 +92,22 @@
 </div>
 
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-<!--新增視窗-->
+
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Create new detail</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
+      <div class="modal-body" id="newpage">
+        
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
+
+      
     </div>
   </div>
 </div>
@@ -150,7 +137,7 @@
               map: map
             });
 
-          attachSecretMessage(marker,spot.spot_name+"<div id ='rating'>"+spot.rating+"</div>"+"<img id='small-pic'><br>"+spot.address+"<br><button onclick='addSpotTowish()'>+</button><div hidden id='place'>"+spot.place_id+"</div>",spot.place_id,map)
+          attachSecretMessage(marker,spot.spot_name+"<div id ='rating'>"+spot.rating+"</div>"+"<img id='small-pic'><br>"+spot.address+"<br><button onclick='addSpotTowish()' data-toggle='modal' data-target='#exampleModal'>+</button><div hidden id='place'>"+spot.place_id+"</div>",spot.place_id,map)
          // }
           })
 
@@ -297,8 +284,6 @@ function addSpotTowish() {
 
     $.ajax({
       url: "/details/new",
-        //url: "/schedules/"+scheduleId+"/create_to_detail?place_id="+ placeId,
-        //url: window+"/schedules/"+scheduleId+"/create_to_detail?place_id="+placeId,
         method: "GET",
          dataType: "HTML",
          data: {
@@ -306,11 +291,12 @@ function addSpotTowish() {
 place_id:placeId
          },
         error: function(xhr) {
-             alert('Error');
+          $('#newpage').html("ERROR");
+          //   alert('Error');
         },
         success: function(data) {
-          //  divToUpdate.innerHTML = data;
-                alert('Saved Successfully');
+           $('#newpage').html(data);
+          
         }
     });
 
