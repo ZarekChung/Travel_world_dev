@@ -1,13 +1,13 @@
 
- 
-<!-- <a href="#divForm" id="btnForm" data-turbolinks="false">Load Form</a>
+
+ <a href="#divForm" id="btnForm" data-turbolinks="false">Load Form</a>
  <div id="divForm" style="display:none">
-     <form action="tbd">
+     <!--<form action="tbd">
          File: <input type="file" /><br /><br />
          <input type="submit" />
-     </form>
+     </form>-->
  </div>
--->
+
 
 
 <div class="container">
@@ -29,7 +29,7 @@
 
     <div class="map-bolck">
       <div id="map">地圖預留</div>
-     
+
     </div>
 
     <div class="footer-btn">
@@ -44,7 +44,7 @@
    <h3>行程資訊</h3>
 
   </div>
- 
+
  <div id="spot-show">
           <a class="fancybox" id="fancyboxPic" href="">
             <img id="spot-pic">
@@ -53,10 +53,10 @@
         </div>
 
   <div class="spot-list">
-     
-   
-        
-  
+
+
+
+
 
 <div class="row bhoechie-tab-container">
   <div class="col-2 bhoechie-tab-menu"><div class="list-group">
@@ -65,24 +65,25 @@
                   <p class="glyphicon glyphicon-plane">Day <%= schedule.day%></p>
                 </a>
                  <% end %>
-               
+
               </div></div>
   <div class="col-10 bhoechie-tab"><!-- flight section -->
      <% @schedules.each do |schedule| %>
+        <div class="bhoechie-tab-content sortable" id="<%= schedule.id %>">
                  <% schedule.details.all.each do |detail| %>
-                <div class="bhoechie-tab-content active sortable">
                     <center>
                       <h1 class="glyphicon glyphicon-plane" style="font-size:14em;color:#55518a"></h1>
                       <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
                       <h3 style="margin-top: 0;color:#55518a">Flight Reservation</h3>
 <h4>景點名稱<%=detail.spot_id%></h4>
                     </center>
-                </div>
+
                 <% end %>
+</div>
                 <% end %>
                </div>
 
-  
+
 </div>
 </div>
 
@@ -213,7 +214,7 @@ $(function() {
 });
 
 $(function() {
-  /*
+
   $("#btnForm").fancybox({
     'scrolling' : 'auto',
 		        'hideOnOverlayClick' : false,
@@ -223,7 +224,7 @@ $(function() {
        'onStart': function() { $("#divForm").css("display","block"); },
        'onClosed': function() { $("#divForm").css("display","none"); }
    });
-   */
+
 
   $("a.fancybox").fancybox({
     'titlePosition': 'over',
@@ -286,6 +287,35 @@ $("#places").on("click", ".delete-wishspot", function(event) {
 
  });
 */
+//open new detail
+
+function addSpotTowish() {
+  var scheduleId = $('div.bhoechie-tab-content.active').attr('id')
+  var placeId = $("#place").html()
+  var win = $
+  console.log(scheduleId);
+
+    $.ajax({
+      url: "/details/new",
+        //url: "/schedules/"+scheduleId+"/create_to_detail?place_id="+ placeId,
+        //url: window+"/schedules/"+scheduleId+"/create_to_detail?place_id="+placeId,
+        method: "GET",
+         dataType: "HTML",
+         data: {
+             schedule_id:  scheduleId,
+place_id:placeId
+         },
+        error: function(xhr) {
+             alert('Error');
+        },
+        success: function(data) {
+          //  divToUpdate.innerHTML = data;
+                alert('Saved Successfully');
+        }
+    });
+
+
+}
 
 </script>
 <script type="text/template" id="spot-template">

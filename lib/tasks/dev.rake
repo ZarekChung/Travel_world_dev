@@ -49,7 +49,7 @@ namespace :dev do
         spot: Spot.all.sample,
         hr: rand(1..10),
         content: FFaker::Lorem::sentence,
-        category: "FOOD"
+        category_id: 1
       )
     end
     30.times do |i|
@@ -84,7 +84,7 @@ namespace :dev do
       day = ["1","2","3"]
       Schedule.create!(
         day: day.sample,
-        event_id: rand(1..20),
+        event: Event.all.sample,
         stay: FFaker::AddressUA::street_address
       )
     end
@@ -94,7 +94,7 @@ namespace :dev do
         spot: Spot.all.sample,
         hr: rand(1..10),
         content: FFaker::Lorem::sentence,
-        category: "FOOD"
+        category_id: 1
       )
     end
   end

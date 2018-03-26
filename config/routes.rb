@@ -20,7 +20,11 @@ Rails.application.routes.draw do
       get :search_spot
       post :add_to_wish
       delete :destroy_wish
+
     end
+    #member do
+    #  get :create_to_detail
+    #end
   end
 
   resources :details do
