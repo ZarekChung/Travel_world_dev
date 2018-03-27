@@ -4,7 +4,6 @@ class DetailsController < ApplicationController
   def new
     #用get,所以可以傳schedule_id,place_id
     #找出spot
-    puts "test"
     @detail = Detail.new
     #@WishItem = params[:place_id]
     @spot = Spot.where(place_id: params[:place_id]).first
@@ -22,25 +21,30 @@ class DetailsController < ApplicationController
 
  def create
     #1.找出該筆spot_id - 用place去找
-
+    #begin
     @schedules = Schedule.find(params[:detail][:schedule_id])
 
-    #要有如果找不到的防呆
+    #要有如果找不到的防呆!!!!!!
     @spot = Spot.find(params[:detail][:spot_id])
+    #rescue ActiveRecord::RecordNotFound
+    #    @msgResult =  "error"
+
+    #end
+
     @detail = @spot.details.build(detail_params)
     @detail.schedule = @schedules
 
+
     if @detail.save
-      flash #會留到下一個request
-      flash[:notice] = "detail was scuccessfully created"
-      redirect_to root_path
+      @msgResult = "detail was scuccessfully created"
      else
-      flash.now #只存在現在這個request
-      flash.now[:alert] = "detail was failed to create"
-      render :new
+      @msgResult = "detail was failed to create"
      end
   end
 
+  def show
+
+  end
 
   private
   def set_detail

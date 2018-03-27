@@ -1,2 +1,10 @@
 zh-TW:
-    hello: "嗨嗨，向世界說聲嗨！"
+    activerecord:
+    schedule:
+      shar_event: 共享行程
+      wish: 待選清單
+      map_content: 地圖預留
+      view: 查看行程
+      email: 發送Eamil
+      print: 列印行程
+      info: 行程資訊

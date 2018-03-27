@@ -1,0 +1,6 @@
+$('#newpage').html('<%=@msgResult%>');
+var detail = document.createElement("center");
+detail.id = "detail-<%= @detail.id %>";
+$(detail).html($("#spot-add-template").html());
+$(detail).find(".conteaner").html('<%= @detail.spot.spot_name %>');
+$("#<%= @schedules.id %>").append(detail);
