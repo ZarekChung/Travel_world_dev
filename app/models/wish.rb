@@ -12,13 +12,13 @@ class Wish < ApplicationRecord
       spot = @client.spot(place_id)
       #新增到spot??
       Spot.where(place_id: place_id).first_or_create do |newspot|
-        newspot = spot,
-        newspot.image = url,
-        newspot.place_id = place_id,
-        newspot.address = spot.formatted_address,
-        newspot.rating = spot.rating,
-        newspot.lat = spot.lat,
-        newspot.lng = spot.lng,
+        #newspot = spot, 
+        newspot.image = url
+        newspot.place_id = place_id
+        newspot.address = spot.formatted_address
+        newspot.rating = spot.rating
+        newspot.lat = spot.lat
+        newspot.lng = spot.lng
         newspot.spot_name = spot.name
 
     end

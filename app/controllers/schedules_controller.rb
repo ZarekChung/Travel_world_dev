@@ -13,23 +13,25 @@ class SchedulesController < ApplicationController
   #根據前面輸入的國家和地點自動帶入(先寫死)
   def search
     @client = GooglePlaces::Client.new(GoogleKey)
-    @spots= @client.spots_by_query('新店的餐廳',:language => 'zh-tw')
+    @spots= @client.spots_by_query('新店的餐廳',:language => I18n.locale)
   end
 
 
   def search_spot
     @client = GooglePlaces::Client.new(GoogleKey)
     destination = params[:destination]
-    spots= @client.spots_by_query(destination,:language => 'zh-tw')
+    spots= @client.spots_by_query(destination,:language => I18n.locale)
     render :json => { :spots => spots }
   end
 
   #取照片要另外呼叫方法
   def get_spot_phtot
     @client = GooglePlaces::Client.new(GoogleKey)
-    @spot = @client.spot(params[:place_id])
+    @spot = @client.spot(params[:place_id], detail: true)
+    puts @spot
+    puts @spot.reviews
     url =  @spot.photos[0].fetch_url(800)
-    render :json => { :url => url }
+    render :json => { :url => url, :spot => @spot}
   end
 
   def add_to_wish

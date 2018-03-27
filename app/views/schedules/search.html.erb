@@ -12,17 +12,21 @@
         </div>
       </div>
     </div>
-
-    <div class="content">
-        <div class="map-bolck">
+    <div class="row">
+  <div class="col-md-8">
+     <div class="map-bolck">
             <p class="map-note">請點選地圖已加入待選清單</p>
             <div id="map">地圖預留</div>
-            <!--spot info-->
+        </div>  
+
+
+  </div>
+  <div class="col-md-4">
+    <!--spot info-->
             <div id="spot-show">
               <a href=""><img id="spot-pic"></a>
             </div>
-        </div>
-        <!--wish list-->
+      <!--wish list-->
         <div class="choses-item">
           <h2>待選清單</h2>
           <div class="place-item">
@@ -37,14 +41,16 @@
               </tbody>
             </table>   
           </div>
-        </div>  
-    </div>
-
-    
-    <div class="manage-list">
+        </div>
+         <div class="manage-list">
        <button type="button" class="btn btn-primary">排定行程</button>
     </div>
+  </div>
 </div>
+
+</div>
+
+
 
 <script>
 var currentInfoWindow = null;
@@ -72,7 +78,7 @@ function initialize(spots) {
         });
 
         //customized infowindow content
-        attachSecretMessage(marker, spot.name + "<div id ='rating'>" + spot.rating + "</div>" + "<img id='small-pic'><br>" + spot.formatted_address + "<br><button onclick='addSpotTowish()'>+</button><div hidden id='place'>" + spot.place_id + "</div>", spot.place_id, map)
+        attachSecretMessage(marker, spot.reviews+spot.name + "<div id ='rating'>" + spot.rating + "</div>" + "<img id='small-pic'><br>" + spot.formatted_address + "<br><button onclick='addSpotTowish()'>+</button><div hidden id='place'>" + spot.place_id + "</div>", spot.place_id, map)
         // }
     })
 
@@ -104,6 +110,7 @@ function attachSecretMessage(marker, secretMessage, placeId, map) {
 
 function getPhoto(placeId) {
     var url;
+    var spot;
     //console.log(placeId.innerText);
     //console.log(placeId);
     $.ajax({
@@ -112,10 +119,12 @@ function getPhoto(placeId) {
         dataType: "json",
         success: function(data) {
             url = data["url"];
+            spot = data["spot"];
             var smallSpot = document.getElementById("small-pic");
             smallSpot.setAttribute("src", url);
             var spot = document.getElementById("spot-pic");
             spot.setAttribute("src", url);
+            console.log(url);
         }
     });
 
