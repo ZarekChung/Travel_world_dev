@@ -8,11 +8,13 @@ class Wish < ApplicationRecord
       #已經加入待選清單
       return false
     else
-      @client = GooglePlaces::Client.new('AIzaSyDMu30RWUGZzxbJeWhOdaGDPFanAXM2eMM',:language => 'zh-tw')
-      spot = @client.spot(place_id)
+      #@client = GooglePlaces::Client.new(GoogleKey,:language => I18n.locale)
+      #spot = @client.spot(place_id)
+      @client = GooglePlaces::Client.new(GoogleKey)
+      spot = @client.spot(place_id, detail: true,language: I18n.locale)
       #新增到spot??
       Spot.where(place_id: place_id).first_or_create do |newspot|
-        #newspot = spot, 
+        #newspot = spot,
         newspot.image = url
         newspot.place_id = place_id
         newspot.address = spot.formatted_address
@@ -23,7 +25,7 @@ class Wish < ApplicationRecord
 
     end
 
-      wish_item = wish_items.build( lat:spot.lat, lng:spot.lng, place_id: place_id, spot_name: spot.name,image: url,address: spot.formatted_address,rating: spot.rating )
+      wish_item = wish_items.build( district: spot.region, lat:spot.lat, lng:spot.lng, place_id: place_id, spot_name: spot.name,image: url,address: spot.formatted_address,rating: spot.rating )
       wish_item.save!
       self.wish_items
       return true

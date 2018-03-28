@@ -46,6 +46,8 @@ gem 'jbuilder', '~> 2.5'
 
 # icon
 gem 'octicons_helper'
+gem 'font-awesome-sass'
+
 # googe map api
 #gem 'bootstrap-generators', '~> 3.3.4'
 gem 'geocoder'

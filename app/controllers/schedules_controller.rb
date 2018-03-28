@@ -27,11 +27,9 @@ class SchedulesController < ApplicationController
   #取照片要另外呼叫方法
   def get_spot_phtot
     @client = GooglePlaces::Client.new(GoogleKey)
-    @spot = @client.spot(params[:place_id], detail: true)
-    puts @spot
-    puts @spot.reviews
+    @spot = @client.spot(params[:place_id], detail: true,language: I18n.locale)
     url =  @spot.photos[0].fetch_url(800)
-    render :json => { :url => url, :spot => @spot}
+    render :json => { :url => url, :resultSpot => @spot}
   end
 
   def add_to_wish
@@ -53,5 +51,5 @@ class SchedulesController < ApplicationController
     render :json => { :id => @wish_item.id }
   end
 
-  
+
 end

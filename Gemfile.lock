@@ -89,6 +89,8 @@ GEM
       railties (>= 3.1.0)
     ffaker (2.8.1)
     ffi (1.9.23)
+    font-awesome-sass (5.0.6.2)
+      sass (>= 3.2)
     geocoder (1.4.6)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -242,6 +244,7 @@ DEPENDENCIES
   dotenv-rails
   fancybox-rails
   ffaker
+  font-awesome-sass
   geocoder
   google_places (~> 1.1)
   i18n

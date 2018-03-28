@@ -40,8 +40,11 @@
    max-width: 100%;
 }
 #small-pic{
-   height: 50px;
+   height: 100px;
    max-width: 100%;
+}
+#web-link{
+   color: inherit;
 }
 
 #hidden-btn{
@@ -67,7 +70,7 @@ div.bhoechie-tab-container{
   border-radius: 4px;
   -moz-border-radius: 4px;
   border:1px solid #ddd;
-  
+
   -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
   -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
@@ -90,7 +93,7 @@ div.bhoechie-tab-menu div.list-group>a{
 div.bhoechie-tab-menu div.list-group>a .glyphicon,
 div.bhoechie-tab-menu div.list-group>a .fa {
   color: #5A55A3;
-   
+
    transform:rotate(250deg);
 
 }
@@ -136,14 +139,14 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 
 /*===*/
 .map-bolck {
-    
+
 }
 .spot-item{
     border: 1;
 }
 
 .day{
-    writing-mode: vertical-lr 
+    writing-mode: vertical-lr
 }
 .bhoechie-tab{
     height:450px;
