@@ -1,0 +1,12 @@
+
+<% details.each do |detail| %>
+<center id="detail-<%= detail.id %>">
+<div class="conteaner">
+<div><%=detail.start_t%></div>
+<h3><%=detail.spot.spot_name%></h3>
+<div><%=detail.category_id%></div>
+<div><%=detail.hr%></div>
+<div><%=detail.content%></div>
+                     </div>
+                     </center>
+                     <%end%>

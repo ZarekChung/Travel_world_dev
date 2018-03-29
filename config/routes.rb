@@ -22,14 +22,13 @@ Rails.application.routes.draw do
       delete :destroy_wish
 
     end
-    #member do
-    #  get :create_to_detail
-    #end
   end
 
   resources :details do
     #resources :spots
   end
+
+  resources :wishes, only: :show
 
 
 end

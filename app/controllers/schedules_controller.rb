@@ -9,25 +9,37 @@ class SchedulesController < ApplicationController
     #@schedules = @event.schedules.all
   end
 
+
+
   #搜尋行程default
   #根據前面輸入的國家和地點自動帶入(先寫死)
   def search
     @client = GooglePlaces::Client.new(GoogleKey)
-    @spots= @client.spots_by_query('新店的餐廳',:language => I18n.locale)
+    @spots= @client.spots_by_query('大阪機場',{ language: I18n.locale})
+    @categories = Category.all
   end
 
 
   def search_spot
     @client = GooglePlaces::Client.new(GoogleKey)
-    destination = params[:destination]
-    spots= @client.spots_by_query(destination,:language => I18n.locale)
+    
+    #category = Category.first
+     category = Category.find_by(params[:category])
+
+    if category.nil?
+      #@category = Category.find(params[:category])
+      destination = params[:destination]
+    else
+       destination = params[:destination] + category.name
+    end
+    spots = @client.spots_by_query( destination,:language => I18n.locale)
     render :json => { :spots => spots }
   end
 
   #取照片要另外呼叫方法
   def get_spot_phtot
     @client = GooglePlaces::Client.new(GoogleKey)
-    @spot = @client.spot(params[:place_id], detail: true,language: I18n.locale)
+    @spot = @client.spot(params[:place_id], {detail: true,language: 'zh'})
     url =  @spot.photos[0].fetch_url(800)
     render :json => { :url => url, :resultSpot => @spot}
   end

@@ -10,6 +10,12 @@
            </span>
          </div>
         </div>
+         <div class="search-type">
+             <%#=collection_select(:search, :category_id, Category.all, :id, :name, prompt: true, {class: "form-control"} ,required: true)%>
+             <%#= (collection_select :category_id, Category.all, :id, :name, {prompt: true}, {class: "form-control"}) %>
+             <%= select_tag 'category', options_for_select([["請選擇" , "0" ]] +@categories.collect{ |u| [u.name, u.id] })%>
+         </div>
+         <br>
       </div>
     </div>
     <div class="row">
@@ -27,15 +33,9 @@
           <h2><%=t("schedule.wish")%></h2>
           <div class="place-item">
             <table class="my-table table table-hover">
-                <!-- <% region  = ""%><-->
-                  <% current_wish.wish_items.order(:district).each do |item| %>
-               <!-- <thead id="place-title">
-                    <% if region != item.district%>
-              <tr id="<%= item.id %>"><td class="item-list"><%= item.district %></td><td></tr>-->
-                <% region = item.district%>
-              <% end %>
-                </thead>
+            
               <tbody id="places">
+                <% current_wish.wish_items.order(:district).each do |item| %>
                 <tr id="<%= item.id %>">
                     <td class="item-list"><%= item.spot_name%></td>
                     <td><i class="far fa-trash-alt delete-wishspot"></i></td>
@@ -48,6 +48,8 @@
         </div>
          <div class="manage-list">
        <button type="button" class="btn btn-primary"><%=t("schedule.search.start_planning")%></button>
+       
+       <%= link_to t("schedule.search.start_planning"), new_event_schedule_path,method: :get, class: "btn btn-primary"%>
     </div>
   </div>
 </div>
@@ -66,7 +68,7 @@
         <!--spot info-->
 
                 <div id="spot-show">
-                  <h5 id="spot-name"></h5>
+                  <a id="spot-map-url" href="" target="_blank" class ="main-title"><i class='fas fa-globe'></i></a><h5 id="spot-name"></h5>
                   <h6 id="spot-address"></h6>
                   <div id="spot-rsting"></div>
                   <a href=""><img id="spot-pic"></a>
@@ -115,7 +117,7 @@ function initialize(spots) {
         });
 
         //customized infowindow content
-        attachSecretMessage(marker, "<h6>"+spot.name+"</h6><div id ='rating'>" + spot.rating + "</div>" + "<a id='web-link' target='_blank' href=''><i class='fas fa-globe'></i><a/><button onclick='addSpotTowish()' class='btn btn-light btn-sm'><i class='far fa-plus-square'></i></button><button type='button' data-toggle='modal' data-target='#spot-detail-info' class='btn btn-light btn-sm'><i class='fas fa-info-circle'></i></button><br><img id='small-pic'><div hidden id='place'>" + spot.place_id + "</div>", spot.place_id, map)
+        attachSecretMessage(marker, "<h6>"+spot.name+"</h6><div id ='rating'>" + spot.rating + "</div>" + "<a id='web-link' target='_blank' href=''><i class='fas fa-home'></i><a/><button onclick='addSpotTowish()' class='btn btn-light btn-sm'><i class='far fa-plus-square'></i></button><button type='button' data-toggle='modal' data-target='#spot-detail-info' class='btn btn-light btn-sm'><i class='fas fa-info-circle'></i></button><br><img id='small-pic'><div hidden id='place'>" + spot.place_id + "</div>", spot.place_id, map)
         // }
     })
 
@@ -146,11 +148,11 @@ function attachSecretMessage(marker, secretMessage, placeId, map) {
 }
 
 function getPhoto(placeId) {
-    $("#review-info").remove();
+    
     var url;
     var resultSpot;
-    //console.log(placeId.innerText);
-    //console.log(placeId);
+    $("#review-info").remove();
+
     $.ajax({
         url: "/schedules/get_spot_phtot?place_id=" + placeId,
         method: "GET",
@@ -166,35 +168,31 @@ function getPhoto(placeId) {
             var spot = document.getElementById("spot-pic");
             spot.setAttribute("src", url);
 
+
+
+            var spotWeb = document.getElementById("spot-map-url");
+            spotWeb.setAttribute("href", resultSpot.url);
+
             $("#spot-name").html(resultSpot.name);
            
             $("#spot-rsting").html("<i class='far fa-star'></i>"+resultSpot.rating);
-             $("#spot-address").html(resultSpot.formatted_address);
+            $("#spot-address").html(resultSpot.formatted_address);
 
-
-          var info = document.createElement("div");
-     info.id = "review-info";
-    $("#spot-show").append(info);
-          for(var i = 0; i < resultSpot.reviews.length; i++) { 
-        
-     var review = document.createElement("div");
-     review.id = "spot-reviews";
-     $(review).html($("#review-template").html());
-
-      $(review).find(".review-text").html('<%= octicon "comment" %>'+resultSpot.reviews[i].text);
-      $(review).find(".review-rating").html("<br>評價: "+resultSpot.reviews[i].rating);
-      $(review).find(".review-name").html("<i class='far fa-user-circle'></i>"+resultSpot.reviews[i].author_name);
-    $("#review-info").append(review);
-}
-
-    
-
-
-           // console.log(resultSpot.reviews["text"]);
-           // console.log(resultSpot.website);//
-
-            //console.log(resultSpot.region );
-            //console.log(resultSpot.url  );
+            //creat new comment info
+            var info = document.createElement("div");
+            info.id = "review-info";
+            $("#spot-show").append(info);
+            console.log(resultSpot.reviews.length);
+            for(var i = 0; i < resultSpot.reviews.length; i++) { 
+                var review = document.createElement("div");
+                review.id = "spot-reviews";
+                $(review).html($("#review-template").html());
+                $(review).find(".review-text").html('<%= octicon "comment" %>'+resultSpot.reviews[i].text);
+                $(review).find(".review-rating").html("<br>評價: "+resultSpot.reviews[i].rating);
+                $(review).find(".review-name").html("<i class='far fa-user-circle'></i>"+resultSpot.reviews[i].author_name);
+                
+                $("#review-info").append(review);
+            }
         }
     });
 
@@ -203,11 +201,17 @@ function getPhoto(placeId) {
 //搜尋
 function searchFromStr() {
     var str = document.getElementById("content");
+    var category = $("#category").val()
     //console.log(str.value);
     $.ajax({
-        url: "/schedules/search_spot?destination=" + str.value,
+        //url: "/schedules/search_spot?destination=" + str.value + "&category"+category,
+        url: "/schedules/search_spot",
         method: "GET",
         dataType: "json",
+         data: {
+             destination:  $("#content").val(),
+             category: $("#category").val()
+         },
         success: function(data) {
             initialize(data["spots"]);
         }
@@ -229,9 +233,10 @@ function addSpotTowish() {
             alert(errMessage);
         },
         success: function(data) {
-          var region = document.createElement("tr");
+//目前可以存地區,但要做到頁面續有點太複雜（先改到下一步顯示地區
+/*
+var region = document.createElement("tr");
           region.id = "district";
-
           //  var point = $("#district").find(".item-list");
            // if(!$("#district").find(".item-list").innerHTML == data["wishTems"].district) {
             /*

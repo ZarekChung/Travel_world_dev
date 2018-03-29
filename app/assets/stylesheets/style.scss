@@ -59,9 +59,28 @@
    height:600px;
     overflow:auto;
 }
+.main-title{
+  float: left;
+  color: inherit;
+}
+.search-type li{
+   float: left;
+}
+.overlay{
+  background: rgba(0,0,0,0.5);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 /*=============new==============*/
 
 /*  bhoechie tab */
+
+.itme-text{
+  color: #5A55A3;
+}
 
 div.bhoechie-tab-container{
   z-index: 10;
@@ -92,9 +111,9 @@ div.bhoechie-tab-menu div.list-group>a{
 }
 div.bhoechie-tab-menu div.list-group>a .glyphicon,
 div.bhoechie-tab-menu div.list-group>a .fa {
-  color: #5A55A3;
+  color: #5577a3;
 
-   transform:rotate(250deg);
+  
 
 }
 div.bhoechie-tab-menu div.list-group>a:first-child{
@@ -108,10 +127,11 @@ div.bhoechie-tab-menu div.list-group>a:last-child{
 div.bhoechie-tab-menu div.list-group>a.active,
 div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
 div.bhoechie-tab-menu div.list-group>a.active .fa{
-  background-color: #5A55A3;
-  background-image: #5A55A3;
+  background-color: #5577a3 ;
+  background-image: #5577a3 ;
   color: #ffffff;
-  writing-mode: vertical-rl
+  writing-mode: vertical-rl;
+  
 }
 div.bhoechie-tab-menu div.list-group>a.active:after{
   content: '';
@@ -122,7 +142,7 @@ div.bhoechie-tab-menu div.list-group>a.active:after{
   border-left: 0;
   border-bottom: 13px solid transparent;
   border-top: 13px solid transparent;
-  border-left: 10px solid #5A55A3;
+  border-left: 10px solid #5577a3;
 }
 
 div.bhoechie-tab-content{

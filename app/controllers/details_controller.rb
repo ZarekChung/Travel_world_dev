@@ -32,6 +32,9 @@ class DetailsController < ApplicationController
     #end
 
     @detail = @spot.details.build(detail_params)
+    #start_t = params[:start_at]['exact(4i)']
+    #puts start_t
+    #@detail.start_t = start_t
     @detail.schedule = @schedules
 
 
@@ -52,7 +55,7 @@ class DetailsController < ApplicationController
   end
 
   def detail_params
-    params.require(:detail).permit(:hr, :category_id, :content, :traffic, :start_t,:spot_id,:schedule_id)
+    params.require(:detail).permit(:hr, :category_id, :content, :traffic,:spot_id,:schedule_id)
 
   end
 
