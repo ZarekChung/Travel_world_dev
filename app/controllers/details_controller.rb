@@ -29,12 +29,11 @@ class DetailsController < ApplicationController
     #rescue ActiveRecord::RecordNotFound
     #    @msgResult =  "error"
 
-    #end
 
+    params[:detail].parse_time_select! :start_t
     @detail = @spot.details.build(detail_params)
-    #start_t = params[:start_at]['exact(4i)']
-    #puts start_t
     #@detail.start_t = start_t
+
     @detail.schedule = @schedules
 
 
@@ -50,12 +49,15 @@ class DetailsController < ApplicationController
   end
 
   private
+
+
+
   def set_detail
     @detail = Detail.find(params[:id])
   end
 
   def detail_params
-    params.require(:detail).permit(:hr, :category_id, :content, :traffic,:spot_id,:schedule_id)
+    params.require(:detail).permit(:hr, :category_id, :content, :traffic,:start_t,:spot_id,:schedule_id)
 
   end
 

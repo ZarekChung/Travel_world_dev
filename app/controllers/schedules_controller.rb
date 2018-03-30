@@ -1,4 +1,5 @@
 class SchedulesController < ApplicationController
+
   #排定行程method
   def new
     @wishLists = current_wish.wish_items.all
@@ -9,7 +10,10 @@ class SchedulesController < ApplicationController
     #@schedules = @event.schedules.all
   end
 
-
+  def show
+    @schedule = Schedule.find(params[:id])
+    render :layout => false
+  end
 
   #搜尋行程default
   #根據前面輸入的國家和地點自動帶入(先寫死)
@@ -22,7 +26,7 @@ class SchedulesController < ApplicationController
 
   def search_spot
     @client = GooglePlaces::Client.new(GoogleKey)
-    
+
     #category = Category.first
      category = Category.find_by(params[:category])
 

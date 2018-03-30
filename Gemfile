@@ -67,6 +67,8 @@ gem 'routing-filter'
 #fancybox
 gem 'fancybox-rails'
 
+#time_select
+gem "combined_time_select", "~> 2.0.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
