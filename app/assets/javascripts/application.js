@@ -25,6 +25,7 @@
 
 //= require bootstrap
 //= require bootstrap-sprockets
+//= require twitter/bootstrap
 
 
 $(document).ready(function() {

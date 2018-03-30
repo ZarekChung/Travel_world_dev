@@ -42,6 +42,8 @@ class DetailsController < ApplicationController
      else
       @msgResult = "detail was failed to create"
      end
+
+    #render :json => { :msgResult => @msgResult }
   end
 
   def show

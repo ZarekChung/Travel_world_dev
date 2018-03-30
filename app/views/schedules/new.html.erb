@@ -2,7 +2,7 @@
   <div class="row">
     <div class="content">
       <div class="title">
-        <p class="map-note">XXXX行程</p>
+        <p class="map-note"><%=@event.title%></p>
       </div>
       <!--<div class="share-btn"> <button type="button" class="btn btn-primary"><%=t("schedule.new.shar_event")%></button> </div>-->
     </div>
@@ -19,14 +19,14 @@
       </div>
 
       <div class="footer-btn">
-        <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
-        <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>
+       <!-- <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
+        <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>-->
         <button type="button" class="btn btn-primary"><%=t("schedule.new.view")%></button>
       </div>
 
     </div>
     <div class="col-md-4">
-      <h3>MY Schedules</h3>
+      <h3>My Schedules</h3>
       <div class="spot-list">
 
         <div class="row bhoechie-tab-container">
@@ -50,7 +50,7 @@
             <div id="wish-content" class="bhoechie-tab-content active"></div>
             <% @schedules.each do |schedule| %>
 
-              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content sortable"></div>
+              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content"></div>
             <% end %>
           </div>
 
@@ -110,8 +110,7 @@
 
         attachSecretMessage(
           marker,
-          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button type='button' data-toggle='modal' data-target='#spot-detail-info' class='btn btn-light btn-sm'><i class='fas fa-info-c" +
-              "ircle'></i></button><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'>+</button><div hidden id='place'>" + spot.place_id + "</div>",
+          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'>+</button><div hidden id='place'>" + spot.place_id + "</div>",
           spot.place_id,
           map
         )
@@ -201,9 +200,9 @@
 
     //open new detail
     function addSpotToDetails() {
-      var scheduleId = $('div.bhoechie-tab-content.active').attr('id')
-      var placeId = $("#place").html()
-      var win = $
+      var scheduleId = $('div.bhoechie-tab-content.active').attr('id');
+      var placeId = $("#place").html();
+     scheduleId =  scheduleId.split("-").pop();
       console.log(scheduleId);
 
       $.ajax({
@@ -215,16 +214,18 @@
           place_id: placeId
         },
         error: function (xhr) {
-          $('#newpage').html("ERROR");
+          $('#newpage').html("請先選擇第幾天");
           //   alert('Error');
         },
         success: function (data) {
           $('#newpage').html(data);
-
+         
         }
       });
 
     }
+
+   
 
     function showList() {
       $.ajax({
@@ -256,7 +257,7 @@
 
         error: function (xhr) {
           //$('#newpage').html("ERROR");
-          alert('Error');
+          alert('請再點選一次');
         },
         success: function (data) {
 

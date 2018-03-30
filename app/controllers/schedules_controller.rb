@@ -12,6 +12,7 @@ class SchedulesController < ApplicationController
 
   def show
     @schedule = Schedule.find(params[:id])
+    @Category = Category.all
     render :layout => false
   end
 
@@ -28,14 +29,15 @@ class SchedulesController < ApplicationController
     @client = GooglePlaces::Client.new(GoogleKey)
 
     #category = Category.first
-     category = Category.find_by(params[:category])
-
+     category = Category.find_by(id:params[:category])
+    
     if category.nil?
       #@category = Category.find(params[:category])
       destination = params[:destination]
     else
        destination = params[:destination] + category.name
     end
+
     spots = @client.spots_by_query( destination,:language => I18n.locale)
     render :json => { :spots => spots }
   end

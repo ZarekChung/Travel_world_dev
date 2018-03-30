@@ -43,24 +43,8 @@ namespace :dev do
         stay: FFaker::AddressUA::street_address
       )
     end
-    60.times do |i|
-      Detail.create!(
-        schedule: Schedule.all.sample,
-        spot: Spot.all.sample,
-        hr: rand(1..10),
-        content: FFaker::Lorem::sentence,
-        category_id: 1
-      )
-    end
-    30.times do |i|
-      Reply.create!(
-        comment: FFaker::Lorem::sentence,
-        user: User.all.sample,
-        event: Event.all.sample,
-        number: rand(1..5)
-      )
-    end
 
+    
     Event.all.each do |event|
       user = User.all.sample
       EventsOfUser.create!(user: user, event: event)
